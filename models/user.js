@@ -1,19 +1,26 @@
 const {DataTypes}=require("sequelize");
-const sequelize=require('../utils/db-connection');
+const {sequelize}=require('../utils/db-connection');
 
-const user=sequelize.define('user',{
+const User=sequelize.define('User',{
   id:{
     type:DataTypes.INTEGER,
     primaryKey:true,
     autoIncrement:true,
     allowNull:false
   },
-  name:DataTypes.STRING,
-  phone:DataTypes.STRING,
+  name:{
+    type:DataTypes.STRING,
+    allowNull:false
+  },
+  phone:{
+    type:DataTypes.STRING,
+    allowNull:false
+  },
   email: {
     type: DataTypes.STRING,
+    allowNull: false,
     unique: true
   }
 })
 
-module.exports=user;
+module.exports=User;

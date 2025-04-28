@@ -1,9 +1,9 @@
-const user=require('../models/user');
+const User=require('../models/user');
 
-const addEntries=async (req,res)=>{
+exports.addEntries=async (req,res)=>{
   try{
     const {name,email,phone,appointmentDate}=req.body;
-    const user = await user.create({
+    const user = await User.create({
       name:name,
       email:email,
       phone:phone,
@@ -17,9 +17,9 @@ const addEntries=async (req,res)=>{
  
 };
 
-const getAllUsers = async (req, res) => {
+exports.getAllUsers = async (req, res) => {
   try {
-    const users = await user.findAll();
+    const users = await User.findAll();
     res.status(200).json(users);
   } catch (error) {
     console.error(error);
@@ -27,10 +27,13 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-const deleteUser = async (req, res) => {
+exports.deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const deleted = await user.destroy({ where: { id } });
+    const deleted = await User.destroy({
+       where: { 
+        id:id 
+      } });
     if (deleted === 0) {
       return res.status(404).send("User not found.");
     }
@@ -39,9 +42,3 @@ const deleteUser = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
-module.exports={
-  addEntries,
-  getAllUsers,
-  deleteUser
-}
